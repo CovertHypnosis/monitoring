@@ -1,5 +1,7 @@
 package ge.jemali.monitoring.services;
 
+import ge.jemali.monitoring.exceptions.RecordNotFoundException;
+import ge.jemali.monitoring.exceptions.RecordSyntaxException;
 import ge.jemali.monitoring.models.Measurement;
 import ge.jemali.monitoring.models.User;
 import ge.jemali.monitoring.repositories.MeasurementRepository;
@@ -10,21 +12,37 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
 @Service
 public class MeasureService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    MeasurementRepository measurementRepository;
+    private MeasurementRepository measurementRepository;
 
+    public List<Measurement> findMeasurements(String userId) {
+        if (!userId.matches(".*\\d+.*") || Long.parseLong(userId) < 0)
+            throw new RecordSyntaxException("wrong syntax");
 
-    public List<Measurement> findMeasurements(Long userId) {
-        return measurementRepository.findByUserId(userId);
+        // if it's not wrong typed id, make new variable for user id
+        long id = Long.parseLong(userId);
+
+        if (isEmpty(measurementRepository.findByUserId(id)))
+            throw new RecordNotFoundException("no such user in database");
+
+        return measurementRepository.findByUserId(id);
     }
 
     @Transactional
-    public void addMeasurement(Measurement measurements) {
+    public void addMeasurement(Measurement measurements, String userId) {
+        if (!userId.matches(".*\\d+.*") || Long.parseLong(userId) < 0)
+            throw new RecordSyntaxException("wrong syntax");
+
+        long id = Long.parseLong(userId);
+
+        measurements.setUserId(id);
         measurementRepository.save(measurements);
     }
 
