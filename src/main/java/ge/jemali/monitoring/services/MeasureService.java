@@ -3,9 +3,11 @@ package ge.jemali.monitoring.services;
 import ge.jemali.monitoring.exceptions.RecordNotFoundException;
 import ge.jemali.monitoring.exceptions.RecordSyntaxException;
 import ge.jemali.monitoring.models.Measurement;
+import ge.jemali.monitoring.models.MeasurementType;
 import ge.jemali.monitoring.models.User;
 import ge.jemali.monitoring.repositories.MeasurementRepository;
 import ge.jemali.monitoring.repositories.UserRepository;
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,14 +38,18 @@ public class MeasureService {
     }
 
     @Transactional
-    public void addMeasurement(Measurement measurements, String userId) {
+    public void addMeasurement(Measurement measurement, String userId) {
         if (!userId.matches(".*\\d+.*") || Long.parseLong(userId) < 0)
             throw new RecordSyntaxException("wrong syntax");
 
+        if (!EnumUtils.isValidEnum(MeasurementType.class, measurement.getMeasurementType().name())) {
+            throw new RecordSyntaxException("enum is not valid, check again or contact administrator");
+        }
+
         long id = Long.parseLong(userId);
 
-        measurements.setUserId(id);
-        measurementRepository.save(measurements);
+        measurement.setUserId(id);
+        measurementRepository.save(measurement);
     }
 
     @Transactional
