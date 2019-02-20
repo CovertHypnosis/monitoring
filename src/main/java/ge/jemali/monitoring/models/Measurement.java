@@ -1,22 +1,23 @@
 package ge.jemali.monitoring.models;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Measurement {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long measurementId;
 
     @Enumerated(EnumType.STRING)
+    @Column(unique = false)
     private MeasurementType measurementType;
 
     @NotNull
+    @Column(unique = false)
     private String record;
 
+    @Column(unique = false)
     private long userId;
 
     public Measurement() {
