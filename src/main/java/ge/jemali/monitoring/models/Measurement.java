@@ -1,6 +1,8 @@
 package ge.jemali.monitoring.models;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
@@ -9,61 +11,22 @@ public class Measurement {
     @Id
     private long measurementId;
 
-    @NotNull
-    private String gas;
+    @Enumerated(EnumType.STRING)
+    private MeasurementType measurementType;
 
     @NotNull
-    private String coldWater;
-
-    @NotNull
-    private String hotWater;
+    private String record;
 
     private long userId;
 
     public Measurement() {
     }
 
-    public Measurement(long measurementId, @NotNull String gas, @NotNull String coldWater, @NotNull String hotWater,
-                       long userId) {
+    public Measurement(long measurementId, MeasurementType measurementType, @NotNull String record, long userId) {
         this.measurementId = measurementId;
-        this.gas = gas;
-        this.coldWater = coldWater;
-        this.hotWater = hotWater;
+        this.measurementType = measurementType;
+        this.record = record;
         this.userId = userId;
-    }
-
-
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public String getGas() {
-        return gas;
-    }
-
-    public void setGas(String gas) {
-        this.gas = gas;
-    }
-
-    public String getColdWater() {
-        return coldWater;
-    }
-
-    public void setColdWater(String coldWater) {
-        this.coldWater = coldWater;
-    }
-
-    public String getHotWater() {
-        return hotWater;
-    }
-
-    public void setHotWater(String hotWater) {
-        this.hotWater = hotWater;
     }
 
     public long getMeasurementId() {
@@ -72,5 +35,29 @@ public class Measurement {
 
     public void setMeasurementId(long measurementId) {
         this.measurementId = measurementId;
+    }
+
+    public MeasurementType getMeasurementType() {
+        return measurementType;
+    }
+
+    public void setMeasurementType(MeasurementType measurementType) {
+        this.measurementType = measurementType;
+    }
+
+    public String getRecord() {
+        return record;
+    }
+
+    public void setRecord(String record) {
+        this.record = record;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }
