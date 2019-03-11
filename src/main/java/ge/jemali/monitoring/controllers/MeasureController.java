@@ -1,8 +1,9 @@
 package ge.jemali.monitoring.controllers;
 
-import ge.jemali.monitoring.models.Measurement;
-import ge.jemali.monitoring.models.User;
+import ge.jemali.monitoring.models.dto.MeasurementDTO;
 import ge.jemali.monitoring.services.MeasureService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,31 +11,26 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/monitoring")
+@RequestMapping("/measurements")
+@Api(value = "measurements", description = "measurements service", tags = ("measurements"))
 public class MeasureController {
-    @Autowired
-    private MeasureService measureService;
+    private final MeasureService measureService;
 
-    @GetMapping("/measurements/{userId}")
-    public List<Measurement> getMeasurements(@PathVariable String userId) {
-        return measureService.findMeasurements(userId);
+    @Autowired
+    public MeasureController(MeasureService measureService) {
+        this.measureService = measureService;
     }
 
-    @PostMapping("/measurements/{userId}")
-    public String addMeasurement(@PathVariable String userId,@Valid @RequestBody Measurement measurements) {
+    @GetMapping("/{userId}")
+    @ApiOperation(value = "get measurement by user id")
+    public List<MeasurementDTO> getMeasurementsByUserId(@PathVariable Long userId) {
+        return measureService.findMeasurementsByUserId(userId);
+    }
+
+    @PostMapping("/{userId}")
+    @ApiOperation(value = "add measurement by user id")
+    public String addMeasurement(@PathVariable Long userId,@Valid @RequestBody MeasurementDTO measurements) {
         measureService.addMeasurement(measurements, userId);
         return "inserted";
     }
-
-    @PostMapping("/users")
-    public String addUser(@RequestBody User user) {
-        measureService.addUser(user);
-        return "inserted";
-    }
-
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return measureService.getAllUsers();
-    }
-
 }

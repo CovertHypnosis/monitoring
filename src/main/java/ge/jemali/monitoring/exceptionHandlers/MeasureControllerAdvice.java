@@ -1,5 +1,7 @@
-package ge.jemali.monitoring.exceptions;
+package ge.jemali.monitoring.exceptionHandlers;
 
+import ge.jemali.monitoring.exceptions.RecordNotFoundException;
+import ge.jemali.monitoring.exceptions.RecordSyntaxException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,10 +16,10 @@ import java.util.Date;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class MeasureControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ErrorDetails> handleAllExceptions(Exception ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), "something went wrong, go back and try again",
                 request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }

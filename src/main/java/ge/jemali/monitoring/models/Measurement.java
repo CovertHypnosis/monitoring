@@ -1,5 +1,7 @@
 package ge.jemali.monitoring.models;
 
+import ge.jemali.monitoring.enums.MeasurementType;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -7,35 +9,34 @@ import javax.validation.constraints.NotNull;
 public class Measurement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long measurementId;
+    @Column(name = "measurement_id")
+    private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(unique = false)
     private MeasurementType measurementType;
 
     @NotNull
-    @Column(unique = false)
     private String record;
 
-    @Column(unique = false)
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 
     public Measurement() {
     }
 
-    public Measurement(long measurementId, MeasurementType measurementType, @NotNull String record, long userId) {
-        this.measurementId = measurementId;
+    public Measurement(MeasurementType measurementType, @NotNull String record, User user) {
         this.measurementType = measurementType;
         this.record = record;
-        this.userId = userId;
+        this.user = user;
     }
 
-    public long getMeasurementId() {
-        return measurementId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMeasurementId(long measurementId) {
-        this.measurementId = measurementId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public MeasurementType getMeasurementType() {
@@ -54,11 +55,20 @@ public class Measurement {
         this.record = record;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Measurement{" +
+                "measurementType=" + measurementType +
+                ", record='" + record + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

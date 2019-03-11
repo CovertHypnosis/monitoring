@@ -1,37 +1,14 @@
-package ge.jemali.monitoring.models;
+package ge.jemali.monitoring.models.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import ge.jemali.monitoring.models.Measurement;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-    private Long id;
-
-    @Column(unique = false)
+public class UserDTO {
     private String name;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Measurement> measurements;
 
-    public User() {
-    }
-
-    public User(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public UserDTO() {
     }
 
     public String getName() {
@@ -52,7 +29,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDTO{" +
                 "name='" + name + '\'' +
                 ", measurements=" + measurements +
                 '}';

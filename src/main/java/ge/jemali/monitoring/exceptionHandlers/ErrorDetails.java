@@ -1,4 +1,4 @@
-package ge.jemali.monitoring.exceptions;
+package ge.jemali.monitoring.exceptionHandlers;
 
 import java.util.Date;
 
@@ -36,5 +36,14 @@ public class ErrorDetails {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    @Override
+    public String toString() {
+        return "ErrorDetails{" +
+                "timestamp=" + timestamp +
+                ", message='" + message + '\'' +
+                ", details='" + details + '\'' +
+                '}';
     }
 }
