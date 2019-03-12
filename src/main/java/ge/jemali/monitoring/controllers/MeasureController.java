@@ -1,6 +1,6 @@
 package ge.jemali.monitoring.controllers;
 
-import ge.jemali.monitoring.models.dto.MeasurementDTO;
+import ge.jemali.monitoring.dto.MeasurementDTO;
 import ge.jemali.monitoring.services.MeasureService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package ge.jemali.monitoring.exceptionHandlers;
+package ge.jemali.monitoring.exceptionhandlers;
 
 import ge.jemali.monitoring.exceptions.RecordNotFoundException;
 import ge.jemali.monitoring.exceptions.RecordSyntaxException;

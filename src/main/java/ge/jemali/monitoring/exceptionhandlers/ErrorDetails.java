@@ -1,4 +1,4 @@
-package ge.jemali.monitoring.exceptionHandlers;
+package ge.jemali.monitoring.exceptionhandlers;
 
 import java.util.Date;
 

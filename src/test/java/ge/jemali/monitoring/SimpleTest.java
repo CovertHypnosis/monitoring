@@ -2,7 +2,7 @@ package ge.jemali.monitoring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ge.jemali.monitoring.enums.MeasurementType;
-import ge.jemali.monitoring.models.dto.MeasurementDTO;
+import ge.jemali.monitoring.dto.MeasurementDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

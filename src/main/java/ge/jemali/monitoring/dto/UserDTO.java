@@ -1,4 +1,4 @@
-package ge.jemali.monitoring.models.dto;
+package ge.jemali.monitoring.dto;
 
 import ge.jemali.monitoring.models.Measurement;
 

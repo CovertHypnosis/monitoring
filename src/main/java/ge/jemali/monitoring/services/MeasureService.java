@@ -1,12 +1,11 @@
 package ge.jemali.monitoring.services;
 
+import ge.jemali.monitoring.dto.MeasurementDTO;
 import ge.jemali.monitoring.enums.MeasurementType;
 import ge.jemali.monitoring.exceptions.RecordNotFoundException;
 import ge.jemali.monitoring.exceptions.RecordSyntaxException;
 import ge.jemali.monitoring.models.Measurement;
 import ge.jemali.monitoring.models.User;
-import ge.jemali.monitoring.models.dto.MeasurementDTO;
-import ge.jemali.monitoring.models.dto.UserDTO;
 import ge.jemali.monitoring.repositories.MeasurementRepository;
 import ge.jemali.monitoring.repositories.UserRepository;
 import org.apache.commons.lang3.EnumUtils;
@@ -57,17 +56,6 @@ public class MeasureService {
         measurementRepository.save(measurement);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void addUser(UserDTO userDTO) {
-        User user = convertToEntity(userDTO);
-        userRepository.save(user);
-    }
-
-    public List<UserDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream().map(e -> convertToDto(e)).collect(Collectors.toList());
-    }
-
     // maybe add more logic later
     private void validate(Long userId) {
         if (userId < 0) {
@@ -76,12 +64,6 @@ public class MeasureService {
     }
 
     // utility methods
-    private UserDTO convertToDto(User user) {
-        return modelMapper.map(user, UserDTO.class);
-    }
-    private User convertToEntity(UserDTO userDTO) {
-        return modelMapper.map(userDTO, User.class);
-    }
     private MeasurementDTO convertToDto (Measurement measurement) {
         return modelMapper.map(measurement, MeasurementDTO.class);
     }
